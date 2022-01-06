@@ -2,37 +2,41 @@
   <h2>coche</h2>
   <p>Marca: {{ brand }}</p>
   <p>Modelo: {{ modelo }}</p>
-  <p>Color: {{ color[2] }}</p>
+  <p>
+    Color:
+    <!-- <span v-for="(color, index) in colors" :key="index">
+      {{ index }}: {{ color }}
+    </span> -->
+    <ul>
+      <li v-for="(color, index) in colors" :key="index">
+         {{ index }}: {{ color }}
+      </li>
+    </ul>
+  </p>
   <p>Caballos: {{ power }} CV</p>
   <p>Precio: ${{ price }}</p>
   {{ mensaje.titulo }} - {{ mensaje.text }}
-
+  <!-- Componentes -->
   <test />
+  <vIf />
+  <click />
 </template>
 
 <script>
 import test from "./test.vue";
+import vIf from "./vIf-vElse.vue"
+import click from "./eventoClick.vue"
 export default {
   components: {
     test,
+    vIf,
+    click
   },
-  //   data() {
-  //     return {
-  //       brand: "Audi",
-  //       modelo: "A4",
-  //       color: ["Azul", "Rojo"],
-  //       price: 38000,
-  //       power: 450,
-  //       mensaje: {
-  //         titulo: "Hola Mundo",
-  //         text: "Bienvenido",
-  //       },
-  //     };
-  //   },
+
   setup() {
     const brand = "Susuki";
     const modelo = "Ciaz";
-    const color = ["azul", "rojo", "blanco"];
+    const colors = ["azul", "rojo", "blanco"];
     const power = 240;
     const price = 45200;
     const mensaje = {
@@ -42,7 +46,7 @@ export default {
     return {
       brand,
       modelo,
-      color,
+      colors,
       power,
       price,
       mensaje,
