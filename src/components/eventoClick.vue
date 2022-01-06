@@ -1,19 +1,25 @@
 <template>
   <p>-----------------------</p>
 
-  <h1>Evento Click</h1>
+  <h1>Evento Click con Binding</h1>
 
   <p>Marca: {{ brand }}</p>
   <p>Modelo: {{ model }}</p>
-  <p>Potencia {{ power }}</p>
-  <button @click="upPower(power)">Aumentar potencia</button>
-  <button @click="downPower(power)">Disminuir potencia</button>
+  <p>Potencia: {{ power2 }}</p>
+  <!-- Incrementar de 50 en 50 con api de opciones-->
+  <button @click="upPower(50)">Aumentar potencia</button>
+  <!-- Disminuir con api de opciones-->
+  <button @click="downPower()">Disminuir potencia</button>
 
-  <button @click="upPowerMax(power)">Aumentar potencia Maxima</button>
-  <button @click="downPowerMax(power)">Disminuir potencia Maxima</button>
+  <!-- Incrementar de 10 en 10 con api de composiciones-->
+  <button @click="upPowerMax(10)">Aumentar potencia Maxima</button>
+  <!-- Disminuir con api de composiciones-->
+  <button @click="downPowerMax()">Disminuir potencia Maxima</button>
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   // API de Opciones
   data() {
@@ -24,19 +30,31 @@ export default {
       cont: 0,
     };
   },
+  methods: {
+    upPower(valor) {
+      console.log("Aumentando potencia ", (this.power = this.power + valor));
+    },
+    downPower() {
+      console.log("Disminuyendo potencia ", this.power--);
+    },
+  },
+
   // API de Composiciones
   setup() {
     const brand2 = "Audi";
     const model2 = "A4";
-    const power2 = "70";
+    let power2 = ref(70);
     let cont = 0;
 
-    const upPowerMax = (valor) => {
-      console.log("Aumentando potencia maxima " + valor);
+    const upPowerMax = (valu) => {
+      // mal sintaxis power2++;
+      power2.value = power2.value + valu;
+      console.log("Aumentando potencia maxima " + power2.value);
     };
 
-    const downPowerMax = (valor) => {
-      console.log("Disminuyendo potencia maxima " + valor);
+    const downPowerMax = () => {
+      power2.value--;
+      console.log("Disminuyendo potencia maxima " + power2.value);
     };
 
     return {
@@ -47,14 +65,6 @@ export default {
       downPowerMax,
       cont,
     };
-  },
-  methods: {
-    upPower(potencia) {
-      console.log("Aumentando potencia ", this.cont++);
-    },
-    downPower(potencia) {
-      console.log("Disminuyendo potencia ", potencia--);
-    },
   },
 };
 </script>
